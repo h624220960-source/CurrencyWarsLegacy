@@ -1,10 +1,13 @@
 :root {
   --bg: #0f1117;
   --surface: #1a1d27;
+  --surface-2: #21252f;
+  --border: #262a36;
   --text: #e6e8ee;
   --muted: #9aa0b0;
   --accent: #4f8cff;
   --accent-hover: #6ea1ff;
+  --danger: #ff6b6b;
   --radius: 10px;
 }
 
@@ -14,17 +17,17 @@
   padding: 0;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
+/* Header ------------------------------------------------------------------ */
 .site-header {
   display: flex;
   align-items: center;
@@ -35,7 +38,8 @@ body {
   background: var(--surface);
   position: sticky;
   top: 0;
-  border-bottom: 1px solid #262a36;
+  z-index: 10;
+  border-bottom: 1px solid var(--border);
 }
 
 .logo {
@@ -43,38 +47,96 @@ body {
   letter-spacing: 0.5px;
 }
 
-.nav a {
+.user-box {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
   color: var(--muted);
-  text-decoration: none;
-  margin-left: 1.25rem;
 }
 
-.nav a:hover {
+.user-box .user-name strong {
   color: var(--text);
 }
 
+/* Layout ------------------------------------------------------------------ */
 main {
-  max-width: 900px;
+  flex: 1;
+  width: 100%;
+  max-width: 960px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 3rem 1.5rem;
 }
 
-.hero {
+.screen[hidden] {
+  display: none;
+}
+
+.screen-title {
+  font-size: 1.75rem;
   text-align: center;
-  padding: 5rem 0 3rem;
 }
 
-.hero h2 {
-  font-size: 2.25rem;
-  margin-bottom: 1rem;
+.screen-subtitle {
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
-.hero p {
+.muted {
   color: var(--muted);
+}
+
+/* Username gate ----------------------------------------------------------- */
+.panel {
+  max-width: 420px;
+  margin: 4rem auto 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  text-align: center;
+}
+
+.panel h2 {
+  margin-bottom: 0.5rem;
+}
+
+.panel .muted {
   margin-bottom: 1.5rem;
 }
 
+input[type="text"] {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+input[type="text"]:focus {
+  border-color: var(--accent);
+}
+
+input[type="text"].invalid {
+  border-color: var(--danger);
+}
+
+.error {
+  color: var(--danger);
+  font-size: 0.85rem;
+  text-align: left;
+  margin-top: 0.5rem;
+}
+
+/* Buttons ----------------------------------------------------------------- */
 .btn {
+  display: inline-block;
+  width: 100%;
+  margin-top: 1.25rem;
   background: var(--accent);
   color: #fff;
   border: none;
@@ -89,42 +151,102 @@ main {
   background: var(--accent-hover);
 }
 
-.output {
-  margin-top: 1rem;
-  color: var(--accent);
-}
-
-.section {
-  padding: 2.5rem 0;
-  border-top: 1px solid #262a36;
-}
-
-.section h3 {
-  margin-bottom: 0.75rem;
-}
-
-.section p {
+.btn-ghost {
+  background: transparent;
   color: var(--muted);
+  border: 1px solid var(--border);
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
 }
 
+.btn-ghost:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+/* Mode grid --------------------------------------------------------------- */
+.mode-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+}
+
+.mode-card {
+  position: relative;
+  text-align: left;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.mode-card:hover:not(.locked) {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  background: var(--surface-2);
+}
+
+.mode-card h3 {
+  margin: 0.75rem 0 0.5rem;
+  font-size: 1.15rem;
+}
+
+.mode-card p {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.mode-tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  padding: 0.1rem 0.6rem;
+}
+
+.mode-card.selected {
+  border-color: var(--accent);
+  background: var(--surface-2);
+  box-shadow: 0 0 0 1px var(--accent) inset;
+}
+
+.mode-card.locked {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.mode-card.locked .mode-tag {
+  color: var(--muted);
+  border-color: var(--muted);
+}
+
+/* Footer ------------------------------------------------------------------ */
 .site-footer {
   text-align: center;
-  padding: 2rem;
+  padding: 1.5rem;
   color: var(--muted);
-  border-top: 1px solid #262a36;
-  margin-top: 3rem;
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border);
 }
 
 @media (max-width: 600px) {
   .site-header {
-    flex-direction: column;
-    align-items: flex-start;
+    padding: 1rem 1.25rem;
   }
-  .nav a {
-    margin-left: 0;
-    margin-right: 1.25rem;
+  .panel {
+    margin-top: 2rem;
   }
-  .hero h2 {
-    font-size: 1.75rem;
+  .screen-title {
+    font-size: 1.4rem;
   }
 }

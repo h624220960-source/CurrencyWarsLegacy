@@ -3,41 +3,67 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="CurrencyWarsLegacy - a browser-based website.">
+  <meta name="description" content="CurrencyWarsLegacy - a browser remake of Honkai: Star Rail's Currency Wars.">
   <title>CurrencyWarsLegacy</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="site-header">
     <h1 class="logo">CurrencyWarsLegacy</h1>
-    <nav class="nav">
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-    </nav>
+    <div class="user-box" id="userBox" hidden>
+      <span class="user-name">Playing as <strong id="userGreeting"></strong></span>
+      <button id="changeUser" class="btn-ghost" type="button">Change</button>
+    </div>
   </header>
 
   <main>
-    <section id="home" class="hero">
-      <h2>Welcome to CurrencyWarsLegacy</h2>
-      <p>This is a starter scaffold. Build something great.</p>
-      <button id="cta" class="btn">Get Started</button>
-      <p id="output" class="output"></p>
+    <!-- Screen 1: Username gate -->
+    <section id="screen-username" class="screen">
+      <div class="panel">
+        <h2>Enter a username</h2>
+        <p class="muted">Choose a name to begin your run.</p>
+        <form id="usernameForm" autocomplete="off" novalidate>
+          <input
+            id="usernameInput"
+            type="text"
+            placeholder="Username"
+            maxlength="20"
+            autofocus>
+          <p id="usernameError" class="error" hidden></p>
+          <button type="submit" class="btn">Continue</button>
+        </form>
+      </div>
     </section>
 
-    <section id="about" class="section">
-      <h3>About</h3>
-      <p>Describe your project here.</p>
-    </section>
+    <!-- Screen 2: Mode select -->
+    <section id="screen-modes" class="screen" hidden>
+      <h2 class="screen-title">Select a mode</h2>
+      <p class="muted screen-subtitle">Choose how you want to play Currency Wars.</p>
 
-    <section id="contact" class="section">
-      <h3>Contact</h3>
-      <p>Add your contact details here.</p>
+      <div class="mode-grid">
+        <button class="mode-card" type="button" data-mode="standard">
+          <span class="mode-tag">Mode</span>
+          <h3>Standard Gambit</h3>
+          <p>The full run. Clear all planes, climb ranks, and earn rewards.</p>
+        </button>
+
+        <button class="mode-card" type="button" data-mode="overclock">
+          <span class="mode-tag">Mode</span>
+          <h3>Overclock Gambit</h3>
+          <p>A shorter run with faster resources. Rewards only, no rank gain.</p>
+        </button>
+
+        <button class="mode-card locked" type="button" disabled>
+          <span class="mode-tag">Locked</span>
+          <h3>Coming Soon</h3>
+          <p>Reserved slot for a future mode.</p>
+        </button>
+      </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <p>&copy; <span id="year"></span> CurrencyWarsLegacy</p>
+    <p>&copy; <span id="year"></span> CurrencyWarsLegacy - a fan remake. Not affiliated with HoYoverse.</p>
   </footer>
 
   <script src="script.js"></script>
