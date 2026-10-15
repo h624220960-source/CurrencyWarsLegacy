@@ -50,10 +50,7 @@
   function showScreen(target) {
     usernameScreen.hidden = target !== usernameScreen;
     modesScreen.hidden = target !== modesScreen;
-    codexBtn.hidden = target !== modesScreen;
-    if (target !== modesScreen) {
-      closeCodex();
-    }
+    closeCodex();
   }
 
   function setUser(name) {
