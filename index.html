@@ -60,6 +60,86 @@
         </button>
       </div>
     </section>
+
+    <!-- Screen 3: Standard Gambit deployment -->
+    <section id="screen-setup" class="screen" hidden>
+      <div class="setup-head">
+        <div>
+          <h2 class="screen-title">Standard Gambit</h2>
+          <p class="muted screen-subtitle">Deploy up to 4 On-Field and 6 Off-Field characters.</p>
+        </div>
+        <button id="setupBack" class="btn-ghost" type="button">Back</button>
+      </div>
+
+      <div class="setup-grid">
+        <div class="setup-panel">
+          <div class="setup-panel-head">
+            <h3>Roster</h3>
+            <input id="rosterSearch" type="text" placeholder="Search..." autocomplete="off">
+          </div>
+          <div id="rosterList" class="roster-list"></div>
+        </div>
+
+        <div class="setup-panel">
+          <div class="team-group">
+            <h4>On-Field <span id="onFieldCount" class="count">0/4</span></h4>
+            <div id="onFieldSlots" class="slot-chips"></div>
+          </div>
+          <div class="team-group">
+            <h4>Off-Field <span id="offFieldCount" class="count">0/6</span></h4>
+            <div id="offFieldSlots" class="slot-chips"></div>
+          </div>
+
+          <div class="team-group">
+            <h4>Encounter</h4>
+            <div id="encounterPicker" class="encounter-picker"></div>
+          </div>
+
+          <div class="setup-actions">
+            <button id="quickFill" class="btn-ghost" type="button">Random Team</button>
+            <button id="beginBattle" class="btn" type="button" disabled>Begin Battle</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Screen 4: Battle -->
+    <section id="screen-battle" class="screen battle-screen" hidden>
+      <div class="battle-topbar">
+        <button id="battleBack" class="btn-ghost" type="button">Retreat</button>
+        <div class="battle-info">
+          <strong id="battleEncounter">Encounter</strong>
+          <span id="battleRound" class="muted">Round 1</span>
+        </div>
+        <div class="battle-controls">
+          <button id="autoToggle" class="btn-ghost" type="button">Auto: Off</button>
+          <button id="speedToggle" class="btn-ghost" type="button">Speed: 1x</button>
+        </div>
+      </div>
+
+      <div class="battlefield" id="battlefield">
+        <div class="side side-player">
+          <div class="bench-row" id="playerOffField"></div>
+          <div class="front-row" id="playerOnField"></div>
+        </div>
+        <div class="side side-enemy">
+          <div class="front-row" id="enemyField"></div>
+        </div>
+      </div>
+
+      <div class="battle-log" id="battleLog"></div>
+
+      <div id="battleResult" class="battle-result" hidden>
+        <div class="battle-result-inner">
+          <h2 id="battleResultTitle">Victory</h2>
+          <p id="battleResultSub" class="muted"></p>
+          <div class="battle-result-actions">
+            <button id="battleAgain" class="btn" type="button">Fight Again</button>
+            <button id="battleExit" class="btn-ghost" type="button">Back to Setup</button>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- Itinerary (codex) -->
@@ -83,5 +163,6 @@
   </footer>
 
   <script src="script.js"></script>
+  <script src="battle.js"></script>
 </body>
 </html>

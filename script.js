@@ -48,8 +48,13 @@
   }
 
   function showScreen(target) {
-    usernameScreen.hidden = target !== usernameScreen;
-    modesScreen.hidden = target !== modesScreen;
+    if (typeof target === "string") {
+      target = document.getElementById(target);
+    }
+    var all = document.querySelectorAll(".screen");
+    Array.prototype.forEach.call(all, function (screen) {
+      screen.hidden = screen !== target;
+    });
     closeCodex();
   }
 
@@ -118,10 +123,10 @@
   }
 
   function startMode(mode) {
-    /*
-     * Placeholder for the actual game. Each mode will eventually load its own
-     * setup screen (Investment Environment / Gambit difficulty, etc.).
-     */
+    if (mode === "standard" && window.CWBattle) {
+      window.CWBattle.openSetup();
+      return;
+    }
     var label = mode === "standard" ? "Standard Gambit" : "Overclock Gambit";
     console.log("Starting mode: " + label + " for user: " + username);
     window.alert(label + " selected. This mode is not implemented yet.");
@@ -742,6 +747,22 @@
       closeCodex();
     }
   });
+
+  // Expose shared data + navigation for the battle module.
+  window.CW = {
+    showScreen: showScreen,
+    getUser: function () {
+      return username;
+    },
+    data: {
+      COST_ROSTER: COST_ROSTER,
+      COST_LABEL: COST_LABEL,
+      FACTION_BONDS: FACTION_BONDS,
+      SCHOOL_BONDS: SCHOOL_BONDS,
+      INDEPENDENT_BONDS: INDEPENDENT_BONDS,
+      EMPOWER: EMPOWER
+    }
+  };
 
   // Boot: skip the gate if a username was already stored.
   var stored = loadUsername();
